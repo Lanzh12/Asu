@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DEPO BY MANZY BLUKUTUK</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#080808;color:#fff;font-family:Arial,sans-serif}
+header{padding:24px 15px;text-align:center;background:linear-gradient(120deg,#180000,#410b08,#100000);border-bottom:2px solid #d6a52b}
+.logo{font-size:25px;font-weight:900;color:#ffd65a;letter-spacing:2px}.logo span{color:white}
+header p{font-size:11px;color:#d6b76a;margin:7px 0 0;letter-spacing:3px}
+.container{max-width:850px;margin:auto;padding:18px}.card{background:linear-gradient(145deg,#191919,#101010);border:1px solid #57451e;border-radius:13px;padding:18px;margin-bottom:17px;box-shadow:0 5px 20px #0008}
+.balance{text-align:center}.balance small{color:#aaa;letter-spacing:2px}.balance h1{color:#ffd65a;font-size:35px;margin:12px}
+button{border:0;border-radius:7px;padding:12px 17px;font-weight:bold;cursor:pointer}
+.gold{background:linear-gradient(120deg,#ffe28a,#bd8619);color:#180e00}.dark{background:#292929;color:white;border:1px solid #555}
+.actions{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}.section-title{color:#ffd65a;font-size:17px;margin-bottom:15px}
+.games{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.game{background:#24201a;border:1px solid #59451d;border-radius:10px;padding:17px 5px;text-align:center;cursor:pointer}
+.game b{display:block;font-size:27px;margin-bottom:8px}.game span{font-size:12px;color:#e9c66e}
+.slot{display:flex;justify-content:center;gap:10px;margin:25px 0}.reel{background:#eee;color:#151515;width:85px;height:85px;border-radius:10px;display:grid;place-items:center;font-size:42px;border:4px solid #c99c37}
+.slot button{width:100%;font-size:16px}.info{color:#999;font-size:12px;text-align:center;margin-top:12px}
+.history{font-size:13px;color:#ccc;line-height:2}.history div{border-bottom:1px solid #292929;padding:5px}
+footer{text-align:center;color:#777;font-size:11px;padding:25px}
+input{width:100%;padding:13px;background:#090909;border:1px solid #66501f;color:white;border-radius:7px;margin:10px 0}
+.modal{display:none;position:fixed;inset:0;background:#000d;align-items:center;justify-content:center;padding:20px;z-index:5}
+.modal-box{background:#181818;border:1px solid #d6a52b;border-radius:13px;padding:22px;width:100%;max-width:350px}
+.modal-box h3{color:#ffd65a;margin-bottom:12px}.modal-box button{margin-top:8px;width:100%}
+#message{color:#ffd65a;text-align:center;margin:13px 0;min-height:20px;font-weight:bold}
+.badge{font-size:10px;color:#ffdb75;border:1px solid #8d6820;padding:5px 9px;border-radius:20px}
+</style>
+</head>
+<body>
+<header><div class="logo">DEPO <span>BY</span> MANZY</div><p>BLUKUTUK • VIP EXPERIENCE</p></header>
+<div class="container">
+<div style="text-align:center;margin:15px"><span class="badge">● MODE SIMULASI • UANG VIRTUAL</span></div>
+<div class="card balance"><small>TOTAL SALDO VIRTUAL</small><h1 id="balance">Rp 1.000.000</h1>
+<div class="actions"><button class="gold" onclick="openModal('deposit')">＋ DEPOSIT</button><button class="dark" onclick="openModal('withdraw')">WITHDRAW</button></div></div>
+<div class="card"><div class="section-title">🔥 PILIH PERMAINAN</div><div class="games">
+<div class="game" onclick="playSlot()"><b>🎰</b><span>SLOT</span></div>
+<div class="game" onclick="coinFlip()"><b>🪙</b><span>COIN FLIP</span></div>
+<div class="game" onclick="dice()"><b>🎲</b><span>DICE</span></div>
+</div></div>
+<div class="card"><div class="section-title">🎰 SLOT BLUKUTUK</div>
+<div class="slot"><div class="reel" id="r1">🍒</div><div class="reel" id="r2">🍋</div><div class="reel" id="r3">💎</div></div>
+<input id="bet" type="number" value="10000" min="1000" placeholder="Masukkan nominal virtual">
+<button class="gold" onclick="playSlot()" style="width:100%">SPIN SEKARANG</button>
+<div id="message">✨ Semoga beruntung!</div><p class="info">3 simbol sama = jackpot virtual!</p></div>
+<div class="card"><div class="section-title">📜 RIWAYAT AKTIVITAS</div><div class="history" id="history"><div>Selamat datang di DEPO BLUKUTUK!</div></div></div>
+</div>
+<footer>DEPO BY MANZY BLUKUTUK © 2026<br>Semua saldo dan permainan hanya simulasi untuk hiburan.</footer>
+<div class="modal" id="modal"><div class="modal-box"><h3 id="modalTitle">DEPOSIT VIRTUAL</h3><p style="color:#aaa;font-size:12px">Masukkan nominal simulasi.</p>
+<input type="number" id="amount" placeholder="Contoh: 50000"><button class="gold" onclick="confirmAction()">KONFIRMASI</button><button class="dark" onclick="closeModal()">BATAL</button></div></div>
+<script>
+let balance=1000000,action="deposit",spinning=false;
+const money=n=>"Rp "+n.toLocaleString("id-ID");
+function update(){document.getElementById("balance").innerText=money(balance)}
+function log(text){let d=document.createElement("div");d.innerText="• "+new Date().toLocaleTimeString("id-ID")+" — "+text;document.getElementById("history").prepend(d)}
+function openModal(type){action=type;document.getElementById("modalTitle").innerText=type==="deposit"?"DEPOSIT VIRTUAL":"WITHDRAW VIRTUAL";document.getElementById("amount").value="";document.getElementById("modal").style.display="flex"}
+function closeModal(){document.getElementById("modal").style.display="none"}
+function confirmAction(){let amount=Number(document.getElementById("amount").value);if(!Number.isSafeInteger(amount)||amount<1000){alert("Minimal Rp 1.000");return}
+if(action==="deposit"){balance+=amount;log("Deposit virtual +"+money(amount))}else{if(amount>balance){alert("Saldo tidak cukup!");return}balance-=amount;log("Penarikan simulasi -"+money(amount))}
+update();closeModal()}
+function playSlot(){if(spinning)return;let bet=Number(document.getElementById("bet").value);if(!Number.isSafeInteger(bet)||bet<1000||bet>balance){document.getElementById("message").innerText="Nominal tidak valid!";return}
+spinning=true;balance-=bet;update();let symbols=["🍒","🍋","🍇","🔔","💎","7️⃣"],reels=["r1","r2","r3"],count=0;
+let timer=setInterval(()=>{reels.forEach(id=>document.getElementById(id).innerText=symbols[Math.floor(Math.random()*symbols.length)]);count++;
+if(count>=15){clearInterval(timer);let win=Math.random()<0.25,result;if(win){let symbol=symbols[Math.floor(Math.random()*symbols.length)];reels.forEach(id=>document.getElementById(id).innerText=symbol);let prize=bet*3;balance+=prize;result="JACKPOT! "+money(prize)}else{result="ANJING KALAH! 😂"}
+document.getElementById("message").innerText=result;log("Slot: "+result);update();spinning=false}},100)}
+function coinFlip(){let bet=10000;if(balance<bet){alert("Saldo kurang!");return}balance-=bet;let win=Math.random()<0.5;if(win)balance+=bet*2;update();let result=win?"MENANG 🪙":"ANJING KALAH! 😂";document.getElementById("message").innerText=result;log("Coin Flip: "+result)}
+function dice(){let bet=10000;if(balance<bet){alert("Saldo kurang!");return}balance-=bet;let number=Math.floor(Math.random()*6)+1,win=number>=4;if(win)balance+=bet*2;update();let result="Dadu: "+number+" — "+(win?"MENANG 🎲":"ANJING KALAH! 😂");document.getElementById("message").innerText=result;log(result)}
+update();
+</script>
+</body>
+</html>
